@@ -1,0 +1,31 @@
+<nav class="fixed w-full z-50 transition-colors duration-300 border-b border-gray-800" :class="{ 'bg-dark/90 backdrop-blur-md': scrolled, 'bg-transparent': !scrolled }">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="{{ url_for('main.index') }}" class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand to-purple-600 flex items-center justify-center text-sm">H</span>
+            {{ settings.name if settings else 'Hassan Ali' }}
+        </a>
+        
+        <!-- Mobile Menu Toggle -->
+        <div class="md:hidden">
+            <button @click="mobileMenu = !mobileMenu" class="text-gray-300 hover:text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-8 text-sm font-medium items-center">
+            <a href="{{ url_for('main.index') }}" class="text-gray-400 hover:text-brand transition-colors">Home</a>
+            <a href="{{ url_for('main.about') }}" class="text-gray-400 hover:text-brand transition-colors">About</a>
+            <a href="{{ url_for('main.services') }}" class="text-gray-400 hover:text-brand transition-colors">Services & Stack</a>
+            <a href="{{ url_for('main.portfolio') }}" class="text-gray-400 hover:text-brand transition-colors">Portfolio</a>
+            
+            {% if current_user and current_user.is_authenticated %}
+                <a href="{{ url_for('admin.dashboard') }}" class="text-xs text-brand border border-brand/30 px-2 py-1 rounded">Admin</a>
+            {% endif %}
+            
+            <a href="{{ url_for('main.contact') }}" class="px-5 py-2 rounded-full border border-brand text-brand hover:bg-brand hover:text-white transition-colors">
+                Let's Connect
+            </a>
+        </div>
+    </div>
+</nav>

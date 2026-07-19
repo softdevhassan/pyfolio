@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Portfolio{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: '#7c3aed',
+                        dark: '#0d1117',
+                        card: '#161b22',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand selection:text-white" x-data="{ scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 20)">
+    
+    {% include 'components/_header.html' %}
+
+    <main class="max-w-5xl mx-auto px-6 pt-32 pb-20 space-y-32">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include 'components/_footer.html' %}
+
+    <script>
+        $(document).ready(function() {
+            $('a[href^="#"]').on('click', function(e) {
+                var target = this.hash;
+                if(target) {
+                    e.preventDefault();
+                    $('html, body').animate({
+                        scrollTop: $(target).offset().top - 80
+                    }, 500);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

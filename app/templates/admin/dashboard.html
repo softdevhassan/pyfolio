@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="space-y-12">
+    <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+        <h1 class="text-3xl font-bold text-white">Dashboard</h1>
+        <a href="{{ url_for('admin.logout') }}" class="text-sm border border-gray-700 px-4 py-2 rounded text-gray-400 hover:text-white">Logout</a>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="p-4 rounded border border-green-500/50 bg-green-500/10 text-green-400">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="grid md:grid-cols-2 gap-8">
+        <!-- Site Settings Form -->
+        <div class="p-6 rounded-2xl border border-gray-800 bg-card">
+            <h2 class="text-xl font-bold text-white mb-6">Global Settings</h2>
+            <form action="{{ url_for('admin.update_settings') }}" method="POST" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1">Name</label>
+                    <input type="text" name="name" value="{{ settings.name if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1">Role/Tagline</label>
+                    <input type="text" name="role" value="{{ settings.role if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1">Location</label>
+                    <input type="text" name="location" value="{{ settings.location if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1">About Text</label>
+                    <textarea name="about_text" rows="4" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">{{ settings.about_text if settings else '' }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-1">Email</label>
+                    <input type="email" name="email" value="{{ settings.email if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">GitHub URL</label>
+                        <input type="url" name="github_url" value="{{ settings.github_url if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">WhatsApp</label>
+                        <input type="text" name="whatsapp" value="{{ settings.whatsapp if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">
+                    </div>
+                </div>
+                <button type="submit" class="px-4 py-2 mt-4 rounded bg-brand text-white text-sm font-medium hover:bg-brand/90">Save Settings</button>
+            </form>
+        </div>
+
+        <!-- Projects Overview (Readonly for now) -->
+        <div class="p-6 rounded-2xl border border-gray-800 bg-card">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-white">Projects Overview</h2>
+                <span class="text-xs text-brand border border-brand/30 px-2 py-1 rounded">View Only</span>
+            </div>
+            <ul class="space-y-3">
+                {% for p in projects %}
+                <li class="p-3 border border-gray-800 rounded bg-[#0d1117] flex justify-between items-center">
+                    <span class="text-sm text-white">{{ p.title }}</span>
+                    <span class="text-xs text-gray-500">Order: {{ p.order }}</span>
+                </li>
+                {% else %}
+                <li class="text-sm text-gray-500">No projects yet. You can add CRUD logic later.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
