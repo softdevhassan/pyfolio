@@ -35,3 +35,10 @@
 - **WSGI Server Configuration:** Configured a `Procfile` integrating `gunicorn`, a Python WSGI HTTP Server, built to handle concurrent requests efficiently in a production environment.
 - **Heroku Integration:** Deployed to Heroku utilizing automated builds. 
 - **Storage Strategy:** Acknowledging Heroku's Ephemeral File System, the SQLite database is strictly used as a read-only data store in production. The database is pre-seeded and committed locally, meaning the application perfectly utilizes Heroku's stateless architecture to serve dynamic content securely without external database overhead.
+
+## 5. Admin Content Management System (CMS)
+A fully functional, decoupled backend administrative panel was engineered to manage the portfolio's data layer seamlessly without requiring raw database manipulation.
+- **Secure Authentication:** Implemented `flask_login` for session management and `werkzeug.security` for cryptographic password hashing (SHA-256), protecting the admin routes from unauthorized access.
+- **Complete CRUD Lifecycle:** Built intuitive interfaces for full Create, Read, Update, and Delete operations for both **Projects** and **Services**, mapped directly to SQLAlchemy models.
+- **Dynamic Settings & Security Module:** Real-time profile updates (bio, social links, location) and a dedicated security panel to dynamically rotate admin credentials (username and hashed passwords) directly from the dashboard.
+- **Admin Layout:** Deployed a separate base layout (`admin_base.html`) equipped with a responsive sidebar and dark-mode aesthetics, mimicking a professional enterprise SaaS backend.

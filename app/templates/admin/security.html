@@ -1,0 +1,43 @@
+{% extends "admin/admin_base.html" %}
+
+{% block header_title %}Account Security{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('admin.security_update') }}" class="bg-card border border-gray-800 rounded-2xl p-8 space-y-6 max-w-2xl">
+    <div class="space-y-4">
+        <h3 class="text-lg font-bold text-white mb-4">Change Admin Credentials</h3>
+        
+        <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">Username</label>
+            <input type="text" name="username" value="{{ current_user.username }}" required class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand">
+            <p class="text-xs text-gray-500">You use this to log in to the admin panel.</p>
+        </div>
+
+        <div class="pt-4 border-t border-gray-800 space-y-4">
+            <div class="space-y-2">
+                <label class="text-sm font-medium text-gray-300">Current Password *</label>
+                <input type="password" name="current_password" required class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <label class="text-sm font-medium text-gray-300">New Password</label>
+                    <input type="password" name="new_password" class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand">
+                </div>
+                
+                <div class="space-y-2">
+                    <label class="text-sm font-medium text-gray-300">Confirm New Password</label>
+                    <input type="password" name="confirm_password" class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand">
+                </div>
+            </div>
+            <p class="text-xs text-gray-500">Leave new password fields empty if you only want to change your username.</p>
+        </div>
+    </div>
+    
+    <div class="pt-6 border-t border-gray-800 flex justify-end">
+        <button type="submit" class="px-8 py-3 rounded-lg bg-brand text-white font-bold hover:bg-brand/90 transition-colors">
+            Update Credentials
+        </button>
+    </div>
+</form>
+{% endblock %}

@@ -1,80 +1,47 @@
-{% extends "base.html" %}
+{% extends "admin/admin_base.html" %}
 
-{% block title %}Admin Dashboard{% endblock %}
+{% block header_title %}Dashboard Overview{% endblock %}
 
 {% block content %}
-<div class="space-y-12">
-    <div class="flex justify-between items-center border-b border-gray-800 pb-4">
-        <h1 class="text-3xl font-bold text-white">Dashboard</h1>
-        <a href="{{ url_for('admin.logout') }}" class="text-sm border border-gray-700 px-4 py-2 rounded text-gray-400 hover:text-white">Logout</a>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Stat Card 1 -->
+    <div class="p-6 rounded-2xl bg-card border border-gray-800 flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+        </div>
+        <div>
+            <p class="text-sm text-gray-400 font-medium">Total Projects</p>
+            <p class="text-2xl font-bold text-white">{{ projects|length }}</p>
+        </div>
     </div>
-
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="p-4 rounded border border-green-500/50 bg-green-500/10 text-green-400">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-
-    <div class="grid md:grid-cols-2 gap-8">
-        <!-- Site Settings Form -->
-        <div class="p-6 rounded-2xl border border-gray-800 bg-card">
-            <h2 class="text-xl font-bold text-white mb-6">Global Settings</h2>
-            <form action="{{ url_for('admin.update_settings') }}" method="POST" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1">Name</label>
-                    <input type="text" name="name" value="{{ settings.name if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1">Role/Tagline</label>
-                    <input type="text" name="role" value="{{ settings.role if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1">Location</label>
-                    <input type="text" name="location" value="{{ settings.location if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1">About Text</label>
-                    <textarea name="about_text" rows="4" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">{{ settings.about_text if settings else '' }}</textarea>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1">Email</label>
-                    <input type="email" name="email" value="{{ settings.email if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1">GitHub URL</label>
-                        <input type="url" name="github_url" value="{{ settings.github_url if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1">WhatsApp</label>
-                        <input type="text" name="whatsapp" value="{{ settings.whatsapp if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded px-3 py-2 text-sm text-white">
-                    </div>
-                </div>
-                <button type="submit" class="px-4 py-2 mt-4 rounded bg-brand text-white text-sm font-medium hover:bg-brand/90">Save Settings</button>
-            </form>
+    
+    <!-- Stat Card 2 -->
+    <div class="p-6 rounded-2xl bg-card border border-gray-800 flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
         </div>
-
-        <!-- Projects Overview (Readonly for now) -->
-        <div class="p-6 rounded-2xl border border-gray-800 bg-card">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-white">Projects Overview</h2>
-                <span class="text-xs text-brand border border-brand/30 px-2 py-1 rounded">View Only</span>
-            </div>
-            <ul class="space-y-3">
-                {% for p in projects %}
-                <li class="p-3 border border-gray-800 rounded bg-[#0d1117] flex justify-between items-center">
-                    <span class="text-sm text-white">{{ p.title }}</span>
-                    <span class="text-xs text-gray-500">Order: {{ p.order }}</span>
-                </li>
-                {% else %}
-                <li class="text-sm text-gray-500">No projects yet. You can add CRUD logic later.</li>
-                {% endfor %}
-            </ul>
+        <div>
+            <p class="text-sm text-gray-400 font-medium">Services Offered</p>
+            <p class="text-2xl font-bold text-white">{{ services|length }}</p>
         </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="mt-8 p-6 rounded-2xl bg-card border border-gray-800">
+    <h3 class="text-lg font-bold text-white mb-6">Quick Actions</h3>
+    <div class="flex gap-4 flex-wrap">
+        <a href="{{ url_for('admin.projects_create') }}" class="px-6 py-3 rounded-lg bg-brand text-white font-medium hover:bg-brand/90 transition-colors flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            Add New Project
+        </a>
+        <a href="{{ url_for('admin.services_create') }}" class="px-6 py-3 rounded-lg bg-blue-500/10 text-blue-400 font-medium hover:bg-blue-500/20 transition-colors flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            Add New Service
+        </a>
+        <a href="{{ url_for('admin.settings_form') }}" class="px-6 py-3 rounded-lg border border-gray-700 text-white font-medium hover:bg-gray-800 transition-colors flex items-center gap-2">
+            Edit Profile Settings
+        </a>
     </div>
 </div>
 {% endblock %}

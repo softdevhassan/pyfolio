@@ -1,0 +1,51 @@
+{% extends "admin/admin_base.html" %}
+
+{% block header_title %}Site Settings{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('admin.settings_form') }}" class="bg-card border border-gray-800 rounded-2xl p-8 space-y-6">
+    <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">Display Name</label>
+            <input type="text" name="name" value="{{ settings.name if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand">
+        </div>
+        <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">Professional Role</label>
+            <input type="text" name="role" value="{{ settings.role if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand">
+        </div>
+        <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">Location</label>
+            <input type="text" name="location" value="{{ settings.location if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand">
+        </div>
+        <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">Email Address</label>
+            <input type="email" name="email" value="{{ settings.email if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand">
+        </div>
+    </div>
+    
+    <div class="space-y-2">
+        <label class="text-sm font-medium text-gray-300">About / Biography</label>
+        <textarea name="about_text" rows="4" class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand">{{ settings.about_text if settings else '' }}</textarea>
+    </div>
+    
+    <h3 class="text-lg font-bold text-white pt-4 border-t border-gray-800">Social Links</h3>
+    <div class="grid md:grid-cols-3 gap-6">
+        <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">GitHub URL</label>
+            <input type="url" name="github_url" value="{{ settings.github_url if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand">
+        </div>
+        <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">LinkedIn URL</label>
+            <input type="url" name="linkedin_url" value="{{ settings.linkedin_url if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand">
+        </div>
+        <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">WhatsApp</label>
+            <input type="text" name="whatsapp" value="{{ settings.whatsapp if settings else '' }}" class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand">
+        </div>
+    </div>
+    
+    <div class="pt-4 flex justify-end">
+        <button type="submit" class="px-8 py-3 rounded-lg bg-brand text-white font-bold hover:bg-brand/90 transition-colors">Save Settings</button>
+    </div>
+</form>
+{% endblock %}
